@@ -1,0 +1,159 @@
+{
+  "schema": "levelupdiag.koali.manifest.v1",
+  "suite_name": "LevelUpDiag-Koali",
+  "version": "1.0.0",
+  "repository_mode": "standalone-development-appendix",
+  "config_file": "levelupdiag.config.local.json",
+  "config_example_file": "levelupdiag.config.example.json",
+  "control_dir_default": ".levelupdiag",
+  "levels": [
+    {
+      "id": "N00",
+      "name": "Control Panel",
+      "file": "levels/N00_control_panel.pyw",
+      "enabled": true,
+      "required": false,
+      "depends_on": [],
+      "timeout_seconds": 60,
+      "purpose": "Self-check léger de LevelUpDiag-Koali et point de contrôle local."
+    },
+    {
+      "id": "N01",
+      "name": "Environment",
+      "file": "levels/N01_environment.pyw",
+      "enabled": true,
+      "required": true,
+      "depends_on": [],
+      "timeout_seconds": 120,
+      "purpose": "Vérifier Python, les chemins configurés et les outils requis."
+    },
+    {
+      "id": "N02",
+      "name": "Repository",
+      "file": "levels/N02_repository.pyw",
+      "enabled": true,
+      "required": true,
+      "depends_on": [
+        "N01"
+      ],
+      "timeout_seconds": 120,
+      "purpose": "Observer le checkout kOA-Linux et son état sans le modifier."
+    },
+    {
+      "id": "N03",
+      "name": "Documentation",
+      "file": "levels/N03_documentation.pyw",
+      "enabled": true,
+      "required": true,
+      "depends_on": [
+        "N01",
+        "N02"
+      ],
+      "timeout_seconds": 300,
+      "purpose": "Exécuter la validation documentaire publique configurée."
+    },
+    {
+      "id": "N04",
+      "name": "Contracts",
+      "file": "levels/N04_contracts.pyw",
+      "enabled": true,
+      "required": true,
+      "depends_on": [
+        "N01",
+        "N02"
+      ],
+      "timeout_seconds": 300,
+      "purpose": "Exécuter la validation publique des contrats."
+    },
+    {
+      "id": "N05",
+      "name": "Components",
+      "file": "levels/N05_components.pyw",
+      "enabled": true,
+      "required": true,
+      "depends_on": [
+        "N01",
+        "N02"
+      ],
+      "timeout_seconds": 600,
+      "purpose": "Exécuter les validations publiques des composants."
+    },
+    {
+      "id": "N06",
+      "name": "Integrations",
+      "file": "levels/N06_integrations.pyw",
+      "enabled": true,
+      "required": false,
+      "depends_on": [
+        "N04",
+        "N05"
+      ],
+      "timeout_seconds": 600,
+      "purpose": "Exécuter les validations publiques d'intégrations lorsqu'elles sont configurées."
+    },
+    {
+      "id": "N07",
+      "name": "Profiles",
+      "file": "levels/N07_profiles.pyw",
+      "enabled": true,
+      "required": false,
+      "depends_on": [
+        "N04",
+        "N05"
+      ],
+      "timeout_seconds": 600,
+      "purpose": "Exécuter les validations publiques de profils lorsqu'elles sont configurées."
+    },
+    {
+      "id": "N08",
+      "name": "Security",
+      "file": "levels/N08_security.pyw",
+      "enabled": true,
+      "required": false,
+      "depends_on": [
+        "N01",
+        "N02"
+      ],
+      "timeout_seconds": 900,
+      "purpose": "Exécuter la validation sécurité publique configurée."
+    },
+    {
+      "id": "N09",
+      "name": "Offline",
+      "file": "levels/N09_offline.pyw",
+      "enabled": true,
+      "required": false,
+      "depends_on": [
+        "N01",
+        "N02"
+      ],
+      "timeout_seconds": 900,
+      "purpose": "Exécuter la validation offline publique configurée."
+    },
+    {
+      "id": "N10",
+      "name": "System",
+      "file": "levels/N10_system.pyw",
+      "enabled": true,
+      "required": false,
+      "depends_on": [
+        "N01",
+        "N02"
+      ],
+      "timeout_seconds": 1200,
+      "purpose": "Exécuter la validation système publique configurée."
+    },
+    {
+      "id": "N11",
+      "name": "Delivery",
+      "file": "levels/N11_delivery.pyw",
+      "enabled": true,
+      "required": false,
+      "depends_on": [
+        "N01"
+      ],
+      "timeout_seconds": 300,
+      "purpose": "Vérifier l'absence de l'appendice dans une cible de livraison."
+    }
+  ]
+}
