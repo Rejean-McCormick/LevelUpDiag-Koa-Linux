@@ -1,14 +1,14 @@
 # Testing
 
-## Objectif
+## Purpose
 
-Les tests de LevelUpDiag-Koali doivent vérifier principalement l'orchestration.
+LevelUpDiag-Koali tests should primarily verify orchestration.
 
-Le système testé n'est pas kOA-Linux lui-même : les checks kOA appellent les validateurs de kOA-Linux.
+The system under test is not kOA-Linux itself: Koali checks call kOA-Linux validators.
 
-## Tests unitaires
+## Unit tests
 
-Couvrir au minimum :
+Cover at least:
 
 ```text
 load_config
@@ -23,67 +23,67 @@ result serialization
 artifact path helpers
 ```
 
-## Tests runner
+## Runner tests
 
-Cas essentiels :
+Essential cases:
 
-1. level PASS ;
-2. level FAIL ;
-3. exécutable absent ;
-4. fichier level absent ;
-5. timeout ;
-6. exception du level ;
-7. dépendance BLOCKED ;
-8. config invalide ;
-9. output volumineux ;
-10. plusieurs levels exécutés dans l'ordre.
+1. PASS level;
+2. FAIL level;
+3. missing executable;
+4. missing level file;
+5. timeout;
+6. level exception;
+7. BLOCKED dependency;
+8. invalid config;
+9. large output;
+10. multiple levels executed in order.
 
-## Tests de logs
+## Log tests
 
-Vérifier :
+Verify:
 
-- création du dossier ;
-- séparation entre deux runs ;
-- écriture de `result.json` ;
-- écriture de la sortie ;
-- comportement du dossier `latest`.
+- directory creation;
+- separation between two runs;
+- writing `result.json`;
+- writing process output;
+- `latest` directory behavior.
 
-## Tests de manifeste
+## Manifest tests
 
-Vérifier :
+Verify:
 
-- identifiants uniques ;
-- fichiers existants ;
-- dépendances existantes ;
-- absence de cycle simple ;
-- ordre stable.
+- unique identifiers;
+- existing files;
+- existing dependencies;
+- no simple cycle;
+- stable ordering.
 
-## Tests GUI
+## GUI tests
 
-La GUI doit être testée surtout pour :
+The GUI should mainly be tested for:
 
-- chargement du manifeste ;
-- affichage des niveaux ;
-- lancement correct ;
-- ouverture du bon dossier ;
-- remontée du bon verdict.
+- manifest loading;
+- level display;
+- correct launch behavior;
+- opening the correct directory;
+- reporting the correct verdict.
 
-La logique d'exécution doit rester testable sans interface graphique.
+Execution logic must remain testable without a graphical interface.
 
-## Tests d'intégration kOA
+## kOA integration tests
 
-Utiliser un checkout ou une fixture connue.
+Use a known checkout or fixture.
 
-Tester au minimum :
+Test at least:
 
-- cible absente ;
-- commande absente ;
-- commande PASS ;
-- commande FAIL ;
-- commande BLOCKED par outil manquant.
+- missing target;
+- missing command;
+- PASS command;
+- FAIL command;
+- command BLOCKED by a missing tool.
 
-## Test de retrait
+## Removal test
 
-Construire une fausse livraison contenant un fichier LevelUpDiag et vérifier que le level de contrôle le détecte.
+Build a fake delivery containing a LevelUpDiag file and verify that the control level detects it.
 
-Construire ensuite une livraison propre et vérifier qu'elle passe.
+Then build a clean delivery and verify that it passes.

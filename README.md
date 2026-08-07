@@ -1,35 +1,35 @@
 # LevelUpDiag-Koali
 
-LevelUpDiag-Koali est un appendice autonome de diagnostic et de validation utilisé à côté de kOA-Linux pendant le développement.
+LevelUpDiag-Koali is a standalone diagnostic and validation appendix used alongside kOA-Linux during development.
 
-Son rôle est simple :
+Its role is simple:
 
-1. charger une configuration locale ;
-2. lire un manifeste de niveaux ;
-3. lancer une série de scripts `.py`, `.pyw` ou de commandes ;
-4. respecter leur ordre et leurs dépendances simples ;
-5. collecter les sorties et les logs ;
-6. normaliser les verdicts ;
-7. produire une vue cohérente de l'état de la cible.
+1. load a local configuration;
+2. read a level manifest;
+3. run a series of `.py`, `.pyw`, or command-based checks;
+4. respect their order and simple dependencies;
+5. collect outputs and logs;
+6. normalize verdicts;
+7. provide a coherent view of the target state.
 
-LevelUpDiag-Koali n'est pas une partie de kOA-Linux. Il n'est pas requis au runtime et doit être retiré avant la préparation d'une livraison.
+LevelUpDiag-Koali is not part of kOA-Linux. It is not required at runtime and must be removed before preparing a delivery.
 
-## Principes
+## Principles
 
-- le manifeste décrit les niveaux ;
-- chaque niveau reste exécutable indépendamment ;
-- le runner orchestre sans réimplémenter la logique des checks ;
-- les chemins et commandes locaux viennent de la configuration ;
-- les résultats distinguent clairement un échec de la cible d'un problème d'environnement ;
-- les logs sont regroupés par exécution ;
-- la GUI est une façade pratique, pas une autorité ;
-- kOA-Linux reste la cible observée et conserve ses propres règles.
+- the manifest describes the levels;
+- each level remains independently executable;
+- the runner orchestrates without reimplementing check logic;
+- local paths and commands come from configuration;
+- results clearly distinguish a target failure from an environment problem;
+- logs are grouped by execution;
+- the GUI is a convenience facade, not an authority;
+- kOA-Linux remains the observed target and keeps its own rules.
 
-## Structure documentaire
+## Documentation structure
 
-La documentation détaillée commence dans [`docs/README.md`](docs/README.md).
+Detailed documentation starts in [`docs/README.md`](docs/README.md).
 
-Les documents principaux sont :
+The main documents are:
 
 - [`docs/01-overview.md`](docs/01-overview.md)
 - [`docs/02-architecture.md`](docs/02-architecture.md)
@@ -47,10 +47,10 @@ Les documents principaux sont :
 - [`docs/14-development.md`](docs/14-development.md)
 - [`docs/15-reference.md`](docs/15-reference.md)
 
-## Modèle mental
+## Mental model
 
 ```text
-config locale
+local config
      +
 manifest
      ↓
@@ -58,23 +58,23 @@ runner
      ↓
 N00 → N01 → N02 → ...
      ↓
-résultats
+results
      ↓
-logs + rapport global
+logs + global report
 ```
 
-Un niveau peut lui-même appeler un script public de kOA-Linux, `pytest`, `cargo`, un outil système ou une autre commande autorisée.
+A level may itself call a public kOA-Linux script, `pytest`, `cargo`, a system tool, or another authorized command.
 
-## Répertoires runtime
+## Runtime directories
 
-Par défaut, les fichiers produits localement sont placés sous :
+By default, locally produced files are stored under:
 
 ```text
 .levelupdiag/
 ```
 
-Ce répertoire contient l'état d'exécution, les logs et les rapports locaux. Il n'est pas destiné à être livré avec kOA-Linux.
+This directory contains execution state, logs, and local reports. It is not intended to be shipped with kOA-Linux.
 
-## État du projet
+## Project status
 
-LevelUpDiag-Koali est une adaptation spécialisée de LevelUpDiag pour accompagner le développement de kOA-Linux sans fusionner les deux dépôts.
+LevelUpDiag-Koali is a specialized adaptation of LevelUpDiag designed to support kOA-Linux development without merging the two repositories.

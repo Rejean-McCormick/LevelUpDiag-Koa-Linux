@@ -1,12 +1,12 @@
 # Execution and ordering
 
-Ce document décrit le cœur de LevelUpDiag-Koali : aligner une série de niveaux et produire une exécution lisible.
+This document describes the core behavior of LevelUpDiag-Koali: align a series of levels and produce a readable execution flow.
 
-## Ordre principal
+## Primary order
 
-Les niveaux restent ordonnés par leur identifiant ou par un champ `order` explicite.
+Levels remain ordered by their identifier or by an explicit `order` field.
 
-Exemple :
+Example:
 
 ```text
 N00 Control Panel
@@ -23,15 +23,15 @@ N10 System
 N11 Delivery
 ```
 
-La liste exacte appartient au manifeste.
+The exact list belongs to the manifest.
 
-## Dépendances
+## Dependencies
 
-L'ordre numérique indique la progression générale.
+Numeric order indicates the general progression.
 
-`depends_on` exprime les dépendances obligatoires.
+`depends_on` expresses mandatory dependencies.
 
-Exemple :
+Example:
 
 ```text
 N01 Environment
@@ -43,32 +43,32 @@ N04 Contracts
  └─→ N06 Integrations
 ```
 
-## Plan d'exécution
+## Execution plan
 
-Avant lancement, le runner construit une liste de niveaux :
+Before execution, the runner builds a level list:
 
-1. filtrer les niveaux désactivés ;
-2. vérifier les fichiers ;
-3. vérifier les dépendances ;
-4. classer les niveaux ;
-5. déterminer ceux qui sont immédiatement exécutables ;
-6. lancer les niveaux ;
-7. enregistrer chaque résultat ;
-8. continuer ou bloquer selon la politique de campagne.
+1. filter disabled levels;
+2. verify files;
+3. verify dependencies;
+4. order levels;
+5. determine which levels are immediately executable;
+6. run levels;
+7. record each result;
+8. continue or block according to campaign policy.
 
-## Exécution séquentielle
+## Sequential execution
 
-C'est le mode par défaut.
+This is the default mode.
 
 ```text
 N01 → N02 → N03 → N04
 ```
 
-Il est le plus facile à diagnostiquer.
+It is the easiest mode to diagnose.
 
-## Exécution parallèle
+## Parallel execution
 
-Le parallélisme peut être utilisé uniquement pour des niveaux indépendants.
+Parallelism may be used only for independent levels.
 
 ```text
        ┌→ N03
@@ -76,34 +76,34 @@ N01 ───┼→ N04
        └→ N05
 ```
 
-Le runner ne doit jamais paralléliser deux niveaux lorsqu'une dépendance explicite existe.
+The runner must never parallelize two levels when an explicit dependency exists.
 
-## Précondition échouée
+## Failed precondition
 
-Si N04 dépend de N03 et que N03 est `BLOCKED`, N04 devient normalement `BLOCKED` avec une raison liée à la dépendance.
+If N04 depends on N03 and N03 is `BLOCKED`, N04 normally becomes `BLOCKED` with a dependency-related reason.
 
-Un échec fonctionnel (`FAIL`) peut soit arrêter les dépendants, soit les laisser tourner si leur résultat reste utile. Ce comportement doit être déclaré au niveau de la campagne ou du level, pas implicite.
+A functional failure (`FAIL`) may either stop dependents or allow them to run if their result remains useful. This behavior must be declared at the campaign or level scope, not left implicit.
 
 ## Timeout
 
-Chaque niveau peut définir un timeout.
+Each level may define a timeout.
 
-Lorsqu'il est dépassé :
+When it is exceeded:
 
-- le processus est arrêté ;
-- le résultat indique le timeout ;
-- les sorties disponibles sont conservées ;
-- le runner continue selon la politique de la campagne.
+- the process is stopped;
+- the result records the timeout;
+- available output is preserved;
+- the runner continues according to campaign policy.
 
-## Fenêtres `.pyw`
+## `.pyw` windows
 
-Les niveaux `.pyw` peuvent être lancés avec Python windowed.
+`.pyw` levels may be launched with windowed Python.
 
-Pour une campagne automatisée, préférer une variante non interactive si le niveau en possède une.
+For an automated campaign, prefer a non-interactive variant when the level provides one.
 
-## Fin de campagne
+## Campaign completion
 
-Une campagne est terminée lorsque tous les niveaux attendus ont reçu un état final :
+A campaign is complete when every expected level has reached a final state:
 
 ```text
 PASS
@@ -117,4 +117,4 @@ INFRA_ERROR
 CONFIG_ERROR
 ```
 
-L'absence de résultat n'est pas un résultat final.
+A missing result is not a final result.

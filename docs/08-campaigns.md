@@ -1,22 +1,22 @@
 # Campaigns
 
-## Définition
+## Definition
 
-Une Campaign est simplement un groupe de levels exécutés ensemble.
+A Campaign is simply a group of levels executed together.
 
-Elle ne crée pas une nouvelle couche de règles.
+It does not create a new rules layer.
 
-Elle répond à :
+It answers:
 
 ```text
-quelle cible ?
-quels niveaux ?
-dans quel ordre ?
-quand ?
-avec quel résultat final ?
+which target?
+which levels?
+in what order?
+when?
+with what final result?
 ```
 
-## Exemple
+## Example
 
 ```json
 {
@@ -27,39 +27,39 @@ avec quel résultat final ?
 }
 ```
 
-## Types utiles
+## Useful types
 
 ### developer-fast
 
-Retour rapide pendant le développement.
+Fast feedback during development.
 
-Exécute seulement quelques niveaux courts.
+Runs only a few short levels.
 
 ### bundle-validation
 
-Valide une zone ou un bundle de travail.
+Validates one area or work bundle.
 
 ### merge-validation
 
-Exécute les validations requises avant fusion.
+Runs validations required before merge.
 
 ### nightly
 
-Exécute une série plus large lorsque le temps d'exécution est moins critique.
+Runs a broader series when execution time is less critical.
 
 ### release-preparation
 
-Regroupe les validations pertinentes avant la préparation d'une livraison.
+Groups validations relevant before preparing a delivery.
 
 ### delivery-check
 
-Vérifie spécifiquement que l'appendice n'est pas présent dans le livrable.
+Specifically verifies that the appendix is not present in the deliverable.
 
-## Résultat global
+## Global result
 
-Une campagne ne devrait pas réduire toutes les situations à un booléen.
+A campaign should not reduce every situation to a boolean.
 
-Résumé recommandé :
+Recommended summary:
 
 ```json
 {
@@ -74,12 +74,12 @@ Résumé recommandé :
 }
 ```
 
-## Complétude
+## Completeness
 
-La campagne doit connaître la liste des niveaux qu'elle devait exécuter.
+The campaign must know the list of levels it was expected to run.
 
-Un niveau requis sans résultat final rend la campagne incomplète.
+A required level without a final result makes the campaign incomplete.
 
-## Historique
+## History
 
-Chaque campagne reçoit un identifiant de run ou un timestamp afin de séparer ses logs des campagnes précédentes.
+Each campaign receives a run identifier or timestamp so its logs remain separate from previous campaigns.

@@ -1,14 +1,14 @@
 # Removal before delivery
 
-## Règle
+## Rule
 
-LevelUpDiag-Koali est un outil de développement et de validation.
+LevelUpDiag-Koali is a development and validation tool.
 
-Il doit être retiré avant toute livraison de kOA-Linux.
+It must be removed before any kOA-Linux delivery.
 
-## Ce qui doit être absent
+## What must be absent
 
-Le livrable final ne doit pas contenir notamment :
+The final deliverable must not contain, in particular:
 
 ```text
 LevelUpDiag-Koali/
@@ -23,51 +23,51 @@ START_LEVELUPDIAG.bat
 launchers/
 ```
 
-La liste réelle du check doit correspondre aux noms utilisés par le dépôt final.
+The actual check list must match the names used by the final repository.
 
-## Niveau dédié
+## Dedicated level
 
-Le manifeste Koali devrait contenir un niveau final :
+The Koali manifest should contain a final level such as:
 
 ```text
 delivery.appendix.absent
 ```
 
-ou un identifiant Nxx équivalent.
+or an equivalent Nxx identifier.
 
-Son rôle est uniquement de vérifier l'absence de l'appendice dans les artefacts inspectés.
+Its only role is to verify that the appendix is absent from inspected artifacts.
 
-## Ce que le check inspecte
+## What the check inspects
 
-Selon le type de livraison :
+Depending on delivery type:
 
-- répertoire de staging ;
-- archive ;
-- contenu de package ;
-- image montée ou extraite ;
-- inventaire des fichiers du livrable.
+- staging directory;
+- archive;
+- package contents;
+- mounted or extracted image;
+- deliverable file inventory.
 
-## Ce qui peut être conservé hors livraison
+## What may be retained outside delivery
 
-Les rapports LevelUpDiag peuvent être conservés séparément comme diagnostics de développement.
+LevelUpDiag reports may be kept separately as development diagnostics.
 
-Ils ne doivent pas être copiés dans le produit uniquement parce qu'ils ont servi à sa validation.
+They must not be copied into the product merely because they were used to validate it.
 
-## Procédure recommandée
+## Recommended procedure
 
-1. terminer les campagnes utiles ;
-2. exporter les rapports nécessaires hors du staging ;
-3. supprimer l'appendice et `.levelupdiag/` du périmètre de build ;
-4. reconstruire ou nettoyer le staging ;
-5. exécuter le check d'absence ;
-6. seulement ensuite poursuivre le processus de livraison.
+1. complete useful campaigns;
+2. export required reports outside staging;
+3. remove the appendix and `.levelupdiag/` from the build scope;
+4. rebuild or clean staging;
+5. run the absence check;
+6. only then continue the delivery process.
 
-## Échec
+## Failure
 
-Toute présence résiduelle produit :
+Any residual presence produces:
 
 ```text
 FAIL
 ```
 
-Le remède est de corriger le staging ou la procédure de packaging, puis relancer le check.
+The remedy is to correct staging or packaging, then rerun the check.

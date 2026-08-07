@@ -15,7 +15,7 @@
       "required": false,
       "depends_on": [],
       "timeout_seconds": 60,
-      "purpose": "Self-check léger de LevelUpDiag-Koali et point de contrôle local."
+      "purpose": "Lightweight LevelUpDiag-Koali self-check and local control point."
     },
     {
       "id": "N01",
@@ -25,7 +25,7 @@
       "required": true,
       "depends_on": [],
       "timeout_seconds": 120,
-      "purpose": "Vérifier Python, les chemins configurés et les outils requis."
+      "purpose": "Verify Python, configured paths, and required tools."
     },
     {
       "id": "N02",
@@ -37,7 +37,7 @@
         "N01"
       ],
       "timeout_seconds": 120,
-      "purpose": "Observer le checkout kOA-Linux et son état sans le modifier."
+      "purpose": "Observe the kOA-Linux checkout and its state without modifying it."
     },
     {
       "id": "N03",
@@ -50,7 +50,7 @@
         "N02"
       ],
       "timeout_seconds": 300,
-      "purpose": "Exécuter la validation documentaire publique configurée."
+      "purpose": "Run the configured public documentation validation."
     },
     {
       "id": "N04",
@@ -63,7 +63,7 @@
         "N02"
       ],
       "timeout_seconds": 300,
-      "purpose": "Exécuter la validation publique des contrats."
+      "purpose": "Run the public contracts validation."
     },
     {
       "id": "N05",
@@ -76,7 +76,7 @@
         "N02"
       ],
       "timeout_seconds": 600,
-      "purpose": "Exécuter les validations publiques des composants."
+      "purpose": "Run the public component validations."
     },
     {
       "id": "N06",
@@ -89,7 +89,7 @@
         "N05"
       ],
       "timeout_seconds": 600,
-      "purpose": "Exécuter les validations publiques d'intégrations lorsqu'elles sont configurées."
+      "purpose": "Run public integration validations when configured."
     },
     {
       "id": "N07",
@@ -102,7 +102,7 @@
         "N05"
       ],
       "timeout_seconds": 600,
-      "purpose": "Exécuter les validations publiques de profils lorsqu'elles sont configurées."
+      "purpose": "Run public profile validations when configured."
     },
     {
       "id": "N08",
@@ -115,7 +115,7 @@
         "N02"
       ],
       "timeout_seconds": 900,
-      "purpose": "Exécuter la validation sécurité publique configurée."
+      "purpose": "Run the configured public security validation."
     },
     {
       "id": "N09",
@@ -128,7 +128,7 @@
         "N02"
       ],
       "timeout_seconds": 900,
-      "purpose": "Exécuter la validation offline publique configurée."
+      "purpose": "Run the configured public offline validation."
     },
     {
       "id": "N10",
@@ -141,7 +141,7 @@
         "N02"
       ],
       "timeout_seconds": 1200,
-      "purpose": "Exécuter la validation système publique configurée."
+      "purpose": "Run the configured public system validation."
     },
     {
       "id": "N11",
@@ -153,7 +153,7 @@
         "N01"
       ],
       "timeout_seconds": 300,
-      "purpose": "Vérifier l'absence de l'appendice dans une cible de livraison."
+      "purpose": "Verify that the appendix is absent from a delivery target."
     }
   ]
 }

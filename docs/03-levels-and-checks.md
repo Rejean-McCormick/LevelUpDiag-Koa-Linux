@@ -1,22 +1,22 @@
 # Levels and checks
 
-## Définition
+## Definition
 
-Un Level est une unité de diagnostic ou de validation autonome.
+A Level is an autonomous diagnostic or validation unit.
 
-Un bon niveau répond à une question précise, par exemple :
+A good level answers one precise question, for example:
 
 ```text
-L'environnement minimum est-il disponible ?
-Les scripts de validation documentaire passent-ils ?
-Les composants peuvent-ils lancer leurs tests ?
-Les intégrations obligatoires sont-elles accessibles ?
-Le livrable contient-il encore l'appendice ?
+Is the minimum environment available?
+Do the documentation validation scripts pass?
+Can components run their tests?
+Are required integrations available?
+Does the delivery still contain the appendix?
 ```
 
-## Identité
+## Identity
 
-Les identifiants historiques LevelUpDiag utilisent la forme :
+Historical LevelUpDiag identifiers use the form:
 
 ```text
 N00
@@ -25,13 +25,13 @@ N02
 ...
 ```
 
-Cette convention peut être conservée pour rester simple et compatible avec les launchers.
+This convention can be retained to stay simple and compatible with launchers.
 
-Le numéro représente l'ordre principal, pas une hiérarchie d'autorité.
+The number represents the primary order, not an authority hierarchy.
 
-## Contrat minimal
+## Minimal contract
 
-Chaque entrée du manifeste devrait contenir au minimum :
+Each manifest entry should contain at least:
 
 ```json
 {
@@ -45,40 +45,40 @@ Chaque entrée du manifeste devrait contenir au minimum :
 }
 ```
 
-Les champs optionnels doivent rester justifiés par un besoin réel.
+Optional fields must remain justified by a real need.
 
-## Responsabilités d'un niveau
+## Level responsibilities
 
-Un niveau doit :
+A level must:
 
-1. charger la configuration partagée ;
-2. valider ses prérequis propres ;
-3. exécuter son diagnostic ;
-4. produire des findings utiles ;
-5. écrire un résultat normalisé ;
-6. retourner un code de sortie cohérent.
+1. load shared configuration;
+2. validate its own prerequisites;
+3. execute its diagnostic;
+4. produce useful findings;
+5. write a normalized result;
+6. return a consistent exit code.
 
-## Niveau autonome
+## Standalone level
 
-Un level doit pouvoir être lancé directement lorsque cela facilite le diagnostic :
+A level should be directly executable when that helps diagnosis:
 
 ```text
 python levels/N03_static_integrity.py
 ```
 
-ou, pour un niveau graphique :
+or, for a graphical level:
 
 ```text
 pythonw levels/N03_static_integrity.pyw
 ```
 
-Le runner reste néanmoins le chemin normal pour une exécution alignée.
+The runner remains the normal path for aligned execution.
 
-## Dépendances simples
+## Simple dependencies
 
-Utiliser `depends_on` lorsqu'un niveau ne peut pas fournir un résultat utile sans un autre niveau.
+Use `depends_on` when a level cannot provide a useful result without another level.
 
-Exemple :
+Example:
 
 ```text
 N01 Environment
@@ -88,16 +88,16 @@ N03 Static Integrity
 N04 Contracts
 ```
 
-Ne pas créer de dépendance seulement pour exprimer une préférence d'affichage.
+Do not create a dependency only to express a display preference.
 
 ## Required vs optional
 
-`required: true` signifie que le niveau fait partie du résultat attendu de la campagne.
+`required: true` means the level is part of the expected campaign result.
 
-`required: false` signifie qu'il peut être absent ou non applicable sans empêcher la campagne de terminer.
+`required: false` means it may be absent or non-applicable without preventing the campaign from completing.
 
 ## Placeholders
 
-Une entrée de manifeste sans fichier réel est considérée incomplète.
+A manifest entry without a real file is incomplete.
 
-Le runner doit la signaler clairement et ne pas la présenter comme un test réussi.
+The runner must report it clearly and never present it as a successful test.

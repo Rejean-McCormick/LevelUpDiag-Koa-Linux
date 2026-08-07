@@ -1,14 +1,14 @@
 # Results and logs
 
-## Objectif
+## Purpose
 
-Chaque niveau doit produire un résultat compréhensible sans devoir relire toute sa sortie console.
+Each level must produce a result that can be understood without rereading its entire console output.
 
-Le système conserve néanmoins les logs détaillés pour le diagnostic.
+The system still keeps detailed logs for diagnosis.
 
 ## Verdicts
 
-Les verdicts LevelUpDiag sont :
+LevelUpDiag verdicts are:
 
 ```text
 PASS
@@ -22,9 +22,9 @@ INFRA_ERROR
 CONFIG_ERROR
 ```
 
-Leur signification détaillée est décrite dans [09-failure-and-blocking-model.md](09-failure-and-blocking-model.md).
+Their detailed meaning is described in [09-failure-and-blocking-model.md](09-failure-and-blocking-model.md).
 
-## Rapport minimal d'un level
+## Minimal level report
 
 ```json
 {
@@ -39,9 +39,9 @@ Leur signification détaillée est décrite dans [09-failure-and-blocking-model.
 }
 ```
 
-## Extension Koali recommandée
+## Recommended Koali extension
 
-Sans rendre le schéma lourd, un résultat peut ajouter :
+Without making the schema heavy, a result may add:
 
 ```json
 {
@@ -57,31 +57,31 @@ Sans rendre le schéma lourd, un résultat peut ajouter :
 
 ## Findings
 
-Un finding est une observation structurée.
+A finding is a structured observation.
 
-Exemple :
+Example:
 
 ```json
 {
   "severity": "FAIL",
   "code": "COMMAND_FAILED",
-  "message": "Le runner de contrats a retourné un code non nul.",
+  "message": "The contracts runner returned a non-zero exit code.",
   "path": "ci/scripts/run-contracts.py"
 }
 ```
 
-Un finding doit expliquer :
+A finding should explain:
 
-- ce qui s'est passé ;
-- où ;
-- pourquoi cela compte ;
-- quoi vérifier ensuite lorsque c'est pertinent.
+- what happened;
+- where;
+- why it matters;
+- what to check next when relevant.
 
 ## Logs
 
-Les logs doivent être regroupés par level et par run.
+Logs must be grouped by level and by run.
 
-Exemple :
+Example:
 
 ```text
 .levelupdiag/
@@ -95,40 +95,40 @@ Exemple :
 
 ## output.log
 
-`output.log` contient la sortie complète ou suffisamment complète du processus externe.
+`output.log` contains the complete, or sufficiently complete, output of the external process.
 
-Le rapport principal peut conserver seulement un `output_tail` pour rester lisible.
+The main report may keep only an `output_tail` to remain readable.
 
 ## latest
 
-Une projection pratique peut pointer vers le dernier résultat de chaque level :
+A convenience projection may point to the latest result of each level:
 
 ```text
 .levelupdiag/latest/N04/result.json
 ```
 
-Elle ne remplace pas l'historique des runs.
+It does not replace run history.
 
-## Rapport de campagne
+## Campaign report
 
-Une campagne peut écrire :
+A campaign may write:
 
 ```text
 .levelupdiag/runs/<run-id>/summary.json
 .levelupdiag/runs/<run-id>/summary.txt
 ```
 
-Le résumé contient :
+The summary contains:
 
-- cible ;
-- heure de début et de fin ;
-- levels attendus ;
-- verdict de chaque level ;
-- nombre de PASS/WARN/FAIL/BLOCKED/etc. ;
-- chemins vers les logs.
+- target;
+- start and end time;
+- expected levels;
+- verdict for each level;
+- counts of PASS/WARN/FAIL/BLOCKED/etc.;
+- paths to logs.
 
-## Principe
+## Principle
 
-Les logs racontent le détail.
+Logs tell the details.
 
-Le résultat raconte la conclusion.
+The result tells the conclusion.

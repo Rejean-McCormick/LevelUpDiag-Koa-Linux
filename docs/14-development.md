@@ -1,12 +1,12 @@
 # Development
 
-## Objectif
+## Purpose
 
-Faire évoluer LevelUpDiag-Koali sans transformer l'outil en framework généraliste.
+Evolve LevelUpDiag-Koali without turning it into a general-purpose framework.
 
-## Organisation du core
+## Core organization
 
-Structure cible compacte :
+Compact target structure:
 
 ```text
 levelupdiag_core/
@@ -22,40 +22,40 @@ levelupdiag_core/
 └── artifacts.py
 ```
 
-Tous ces fichiers ne doivent être créés que lorsqu'ils apportent une séparation réelle.
+These files should be created only when they provide a real separation of responsibility.
 
-## Ajouter un nouveau level
+## Adding a new level
 
-1. choisir son identifiant ;
-2. définir sa responsabilité ;
-3. créer son fichier ;
-4. ajouter l'entrée au manifeste ;
-5. utiliser `load_config()` ;
-6. utiliser les helpers communs ;
-7. écrire un résultat ;
-8. tester PASS, FAIL et prérequis manquant ;
-9. documenter le niveau si son comportement n'est pas évident.
+1. choose its identifier;
+2. define its responsibility;
+3. create its file;
+4. add the manifest entry;
+5. use `load_config()`;
+6. use shared helpers;
+7. write a result;
+8. test PASS, FAIL, and missing prerequisite;
+9. document the level if its behavior is not obvious.
 
-## Ajouter une dépendance
+## Adding a dependency
 
-Ajouter `depends_on` dans le manifeste.
+Add `depends_on` to the manifest.
 
-Éviter d'encoder des dépendances par des appels directs entre fichiers de levels.
+Avoid encoding dependencies through direct calls between level files.
 
-## Ajouter une commande kOA
+## Adding a kOA command
 
-La commande doit :
+The command must:
 
-- exister dans le checkout cible ;
-- être utilisable depuis la racine cible ;
-- avoir un comportement non interactif pour les campagnes automatisées ;
-- produire un code de sortie exploitable.
+- exist in the target checkout;
+- be usable from the target root;
+- have non-interactive behavior for automated campaigns;
+- produce a usable exit code.
 
-## Modifier un verdict
+## Modifying a verdict
 
-Les verdicts sont une interface partagée.
+Verdicts are a shared interface.
 
-Une nouvelle valeur doit avoir une signification réellement distincte et être comprise par :
+A new value must have a genuinely distinct meaning and be understood by:
 
 ```text
 runner
@@ -65,11 +65,11 @@ tests
 documentation
 ```
 
-## Ajouter des champs au résultat
+## Adding result fields
 
-Préférer des champs simples et utiles.
+Prefer simple, useful fields.
 
-Exemples raisonnables :
+Reasonable examples:
 
 ```text
 started_at
@@ -81,19 +81,19 @@ cwd
 output_tail
 ```
 
-Éviter les structures profondes si les levels n'en ont pas besoin.
+Avoid deep structures when levels do not need them.
 
-## Compatibilité
+## Compatibility
 
-Un changement de manifeste ou de rapport doit soit rester compatible avec les anciennes entrées, soit changer explicitement l'identifiant de schéma.
+A manifest or report change must either remain compatible with older entries or explicitly change the schema identifier.
 
 ## Definition of done
 
-Une évolution est terminée lorsque :
+A change is complete when:
 
-- elle fonctionne en CLI ;
-- elle fonctionne via le wrapper si applicable ;
-- les erreurs sont classées correctement ;
-- les logs sont lisibles ;
-- les tests associés passent ;
-- la documentation correspond au comportement réel.
+- it works through the CLI;
+- it works through the wrapper when applicable;
+- errors are classified correctly;
+- logs are readable;
+- associated tests pass;
+- documentation matches actual behavior.

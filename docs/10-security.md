@@ -1,10 +1,10 @@
 # Security
 
-Ce document complète le fichier racine [`SECURITY.md`](../SECURITY.md) avec les règles d'implémentation.
+This document complements the root [`SECURITY.md`](../SECURITY.md) with implementation rules.
 
-## Exécution de commandes
+## Command execution
 
-Le runner doit préférer :
+The runner should prefer:
 
 ```python
 subprocess.run(
@@ -13,15 +13,15 @@ subprocess.run(
 )
 ```
 
-à l'exécution d'une chaîne via shell.
+over executing a string through a shell.
 
-Une commande sous forme de chaîne doit être réservée aux cas où un shell est réellement nécessaire et la source de la commande est maîtrisée.
+A string-form command should be reserved for cases where a shell is genuinely required and the command source is controlled.
 
-## Répertoire de travail
+## Working directory
 
-Chaque Run doit connaître explicitement son `cwd`.
+Every Run must explicitly know its `cwd`.
 
-Un check kOA-Linux utilise normalement :
+A kOA-Linux check normally uses:
 
 ```text
 cwd = target_repo_root
@@ -29,23 +29,23 @@ cwd = target_repo_root
 
 ## Timeout
 
-Toute commande externe doit avoir un timeout raisonnable.
+Every external command must have a reasonable timeout.
 
-Un timeout ne doit jamais produire PASS.
+A timeout must never produce PASS.
 
-## Chemins
+## Paths
 
-Les fonctions d'écriture doivent limiter leurs destinations à :
+Write functions must restrict destinations to:
 
-- `control_dir` ;
-- `artifacts_dir` ;
-- un autre répertoire explicitement autorisé.
+- `control_dir`;
+- `artifacts_dir`;
+- another explicitly authorized directory.
 
-Les valeurs contenant `..` ou résolvant en dehors de la racine attendue doivent être examinées avant écriture.
+Values containing `..` or resolving outside the expected root must be reviewed before writing.
 
-## Logs sensibles
+## Sensitive logs
 
-Avant persistance, les niveaux doivent éviter ou masquer :
+Before persistence, levels must avoid or mask values such as:
 
 ```text
 password=
@@ -55,25 +55,25 @@ token=
 authorization:
 ```
 
-Cette liste peut être adaptée dans la configuration.
+This list may be adapted through configuration.
 
-## Variables d'environnement
+## Environment variables
 
-Ne pas écrire l'environnement complet dans un log.
+Do not write the full environment to a log.
 
-N'ajouter au sous-processus que les variables nécessaires en plus de l'environnement hérité.
+Add only required variables to the subprocess environment in addition to the inherited environment.
 
 ## kOA-Linux
 
-Le checkout de kOA-Linux est considéré en lecture seule pendant une campagne normale.
+The kOA-Linux checkout is treated as read-only during a normal campaign.
 
-Les niveaux ne doivent pas :
+Levels must not:
 
-- appliquer de patch ;
-- modifier les manifests ;
-- créer des commits ;
-- nettoyer automatiquement le worktree.
+- apply patches;
+- modify manifests;
+- create commits;
+- automatically clean the worktree.
 
-## Artefacts externes
+## External artifacts
 
-Lorsqu'un niveau inspecte une archive ou un dossier de livraison, il doit éviter d'exécuter son contenu.
+When a level inspects an archive or delivery directory, it must avoid executing its contents.

@@ -1,6 +1,6 @@
 # Architecture
 
-## Vue générale
+## Overview
 
 ```text
 levelupdiag_wrapper.pyw
@@ -23,29 +23,29 @@ configuration      manifest
       results + logs + artifacts
 ```
 
-## Composants
+## Components
 
 ### Configuration
 
-La configuration contient les éléments propres à la machine ou au checkout cible :
+Configuration contains machine-specific or target-checkout-specific values:
 
-- racine de la cible ;
-- outils disponibles ;
-- commandes locales ;
-- chemins de travail ;
-- variables d'environnement nécessaires ;
-- dossier de contrôle ;
-- dossier de diagnostics.
+- target root;
+- available tools;
+- local commands;
+- working paths;
+- required environment variables;
+- control directory;
+- diagnostics directory.
 
 ### Manifest
 
-Le manifeste est l'inventaire des niveaux.
+The manifest is the level inventory.
 
-Il décrit leur identité, leur fichier, leur ordre et les propriétés nécessaires au runner.
+It describes their identity, file, ordering, and the properties needed by the runner.
 
 ### Core
 
-`levelupdiag_core/` contient les fonctions partagées :
+`levelupdiag_core/` contains shared functions:
 
 ```text
 config
@@ -57,26 +57,26 @@ logs
 artifacts
 ```
 
-Le core doit rester suffisamment petit pour être compris sans framework supplémentaire.
+The core must remain small enough to understand without an additional framework.
 
 ### Levels
 
-Les niveaux sont les unités réelles de travail.
+Levels are the actual units of work.
 
-Ils peuvent être écrits en `.pyw` lorsque l'expérience graphique est utile ou en `.py` lorsqu'une exécution console est préférable.
+They may use `.pyw` when a graphical experience is useful or `.py` when console execution is preferable.
 
 ### Wrapper
 
-Le wrapper fournit une interface visuelle pour :
+The wrapper provides a visual interface to:
 
-- afficher les niveaux ;
-- lancer un niveau ;
-- suivre l'état ;
-- ouvrir les rapports ou dossiers de diagnostics.
+- display levels;
+- launch a level;
+- follow status;
+- open reports or diagnostics directories.
 
-Le wrapper ne doit pas contenir la logique métier des niveaux.
+The wrapper must not contain level business logic.
 
-## Direction des dépendances
+## Dependency direction
 
 ```text
 wrapper
@@ -87,18 +87,18 @@ manifest/config
    ↓
 levels
    ↓
-commandes publiques de la cible
+public target commands
 ```
 
-Les levels peuvent utiliser le core partagé.
+Levels may use the shared core.
 
-Le core ne doit pas dépendre d'un level particulier.
+The core must not depend on any specific level.
 
-## Données runtime
+## Runtime data
 
-Les sorties locales sont regroupées sous `.levelupdiag/`.
+Local outputs are grouped under `.levelupdiag/`.
 
-Exemple :
+Example:
 
 ```text
 .levelupdiag/
@@ -110,4 +110,4 @@ Exemple :
 └── latest/
 ```
 
-L'organisation exacte peut évoluer, mais le chemin doit rester centralisé et configurable.
+The exact organization may evolve, but the path must remain centralized and configurable.

@@ -1,112 +1,112 @@
 # Failure and blocking model
 
-La distinction entre types d'échec est une fonction centrale de LevelUpDiag.
+Distinguishing between failure types is a central LevelUpDiag function.
 
 ## PASS
 
-Le niveau s'est exécuté correctement et sa condition attendue est satisfaite.
+The level executed correctly and its expected condition is satisfied.
 
 ## WARN
 
-Le niveau a trouvé une anomalie ou un risque non bloquant.
+The level found a non-blocking anomaly or risk.
 
 ## FAIL
 
-Le niveau a pu exécuter son diagnostic et la cible ne satisfait pas la condition attendue.
+The level was able to execute its diagnostic and the target does not satisfy the expected condition.
 
-Exemple :
+Example:
 
 ```text
-les tests se lancent correctement
-mais 3 tests échouent
+tests start correctly
+but 3 tests fail
 → FAIL
 ```
 
 ## SKIP
 
-Le niveau n'a pas été exécuté volontairement.
+The level was intentionally not executed.
 
-Il doit avoir une raison explicite.
+It must have an explicit reason.
 
 ## BLOCKED
 
-Le niveau devrait être exécuté, mais un prérequis empêche d'obtenir un résultat utile.
+The level should be executed, but a prerequisite prevents obtaining a useful result.
 
-Exemples :
+Examples:
 
 ```text
-outil requis absent
-service requis indisponible
-niveau dépendant bloqué
-checkout cible non accessible
+required tool missing
+required service unavailable
+dependent level blocked
+target checkout inaccessible
 ```
 
 ## PARTIAL
 
-Le niveau a obtenu une partie des informations mais pas assez pour donner PASS ou FAIL de manière complète.
+The level obtained some information, but not enough to produce a complete PASS or FAIL result.
 
 ## ERROR
 
-Le niveau ou son code interne a rencontré une erreur.
+The level or its internal code encountered an error.
 
-Exemple :
+Example:
 
 ```text
-exception Python dans le level
+Python exception inside the level
 → ERROR
 ```
 
 ## INFRA_ERROR
 
-L'environnement d'exécution empêche le diagnostic.
+The execution environment prevents the diagnostic from running.
 
-Exemples :
+Examples:
 
 ```text
-processus impossible à lancer
-timeout d'infrastructure
-interpréteur absent
-erreur système
+process cannot be launched
+infrastructure timeout
+interpreter missing
+system error
 ```
 
 ## CONFIG_ERROR
 
-La configuration du diagnostic est incohérente ou invalide.
+The diagnostic configuration is inconsistent or invalid.
 
-Exemples :
+Examples:
 
 ```text
-target_repo_root invalide
-level inconnu
-commande obligatoire absente de la config
-manifest mal formé
+invalid target_repo_root
+unknown level
+required command missing from config
+malformed manifest
 ```
 
-## Résumé
+## Summary
 
 ```text
 FAIL
-= la cible a été testée et le test n'est pas satisfait
+= the target was tested and did not satisfy the test
 
 BLOCKED
-= la cible n'a pas pu être testée correctement
+= the target could not be tested correctly
 
 ERROR
-= le check lui-même est cassé
+= the check itself is broken
 
 INFRA_ERROR
-= l'environnement d'exécution est cassé
+= the execution environment is broken
 
 CONFIG_ERROR
-= la configuration de LevelUpDiag est cassée
+= LevelUpDiag configuration is broken
 ```
 
-## Agrégation
+## Aggregation
 
-Par défaut :
+By default:
 
-- un `FAIL` requis rend la campagne en échec ;
-- un `CONFIG_ERROR` requis rend la campagne en échec ;
-- un `BLOCKED`, `PARTIAL` ou `INFRA_ERROR` requis rend la campagne bloquée ;
-- un `SKIP` requis rend la campagne incomplète sauf règle explicite ;
-- `WARN` n'est pas équivalent à `FAIL`.
+- a required `FAIL` makes the campaign fail;
+- a required `CONFIG_ERROR` makes the campaign fail;
+- a required `BLOCKED`, `PARTIAL`, or `INFRA_ERROR` makes the campaign blocked;
+- a required `SKIP` makes the campaign incomplete unless an explicit rule says otherwise;
+- `WARN` is not equivalent to `FAIL`.

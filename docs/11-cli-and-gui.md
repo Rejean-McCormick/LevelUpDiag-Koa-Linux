@@ -1,18 +1,18 @@
 # CLI and GUI
 
-LevelUpDiag-Koali possède deux surfaces : scripts CLI et wrapper graphique.
+LevelUpDiag-Koali has two surfaces: CLI scripts and a graphical wrapper.
 
 ## CLI
 
-Le script historique principal est :
+The main historical script is:
 
 ```text
 scripts/run_level.py
 ```
 
-Il permet de lister ou lancer un niveau.
+It can list or launch a level.
 
-Exemples :
+Examples:
 
 ```text
 py scripts/run_level.py --list
@@ -21,9 +21,9 @@ py scripts/run_level.py 4 --wait
 py scripts/run_level.py N04 --windowed
 ```
 
-## Évolution Koali recommandée
+## Recommended Koali evolution
 
-Conserver ces usages et ajouter progressivement :
+Keep these usages and progressively add:
 
 ```text
 py scripts/run_level.py --all
@@ -31,45 +31,45 @@ py scripts/run_level.py --campaign merge-validation
 py scripts/run_level.py --from N03 --to N06
 ```
 
-Il n'est pas nécessaire de construire une grosse CLI tant que ces commandes couvrent le besoin.
+There is no need to build a large CLI while these commands cover the need.
 
 ## print_manifest.py
 
-Ce script fournit une vue rapide du manifeste.
+This script provides a quick view of the manifest.
 
-Il doit rester un outil simple de diagnostic.
+It should remain a simple diagnostic tool.
 
 ## verify_repo.py
 
-Ce script vérifie la structure du dépôt LevelUpDiag-Koali :
+This script verifies the LevelUpDiag-Koali repository structure:
 
-- fichiers principaux présents ;
-- manifeste lisible ;
-- levels référencés présents ;
-- modules Python compilables ;
-- configuration exemple lisible.
+- main files are present;
+- manifest is readable;
+- referenced levels are present;
+- Python modules are compilable;
+- example configuration is readable.
 
-Il vérifie la cohérence fonctionnelle du dépôt, pas le contenu de kOA-Linux.
+It verifies the functional consistency of the repository, not kOA-Linux content.
 
 ## GUI
 
-Le wrapper `.pyw` doit permettre :
+The `.pyw` wrapper should allow users to:
 
-- voir la liste ordonnée ;
-- voir l'état de chaque level ;
-- lancer un level ;
-- lancer une campagne ;
-- ouvrir les logs ;
-- afficher le dernier résultat.
+- view the ordered list;
+- view each level status;
+- launch a level;
+- launch a campaign;
+- open logs;
+- display the latest result.
 
-## Autorité
+## Authority
 
-La GUI ne possède pas de logique de verdict différente de la CLI.
+The GUI does not own verdict logic that differs from the CLI.
 
-Les deux passent par les mêmes fonctions partagées.
+Both go through the same shared functions.
 
-## Mode windowed
+## Windowed mode
 
-Un fichier `.pyw` peut être lancé via Python windowed.
+A `.pyw` file can be launched through windowed Python.
 
-Un niveau destiné à l'automatisation devrait éviter de dépendre d'une interaction GUI obligatoire.
+A level intended for automation should avoid depending on mandatory GUI interaction.

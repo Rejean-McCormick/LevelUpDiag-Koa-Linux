@@ -1,21 +1,21 @@
 # Overview
 
-## But
+## Purpose
 
-LevelUpDiag-Koali sert à exécuter de manière cohérente une série de diagnostics et validations autour d'un checkout de kOA-Linux.
+LevelUpDiag-Koali provides a consistent way to run a series of diagnostics and validations around a kOA-Linux checkout.
 
-Il répond principalement à quatre questions :
+It mainly answers four questions:
 
-1. quels niveaux existent ;
-2. dans quel ordre doivent-ils être exécutés ;
-3. quel est le résultat de chacun ;
-4. où retrouver les logs et artefacts produits.
+1. which levels exist;
+2. in what order they must run;
+3. what the result of each one is;
+4. where to find the produced logs and artifacts.
 
-## Nature du système
+## Nature of the system
 
-LevelUpDiag-Koali est un appendice de développement.
+LevelUpDiag-Koali is a development appendix.
 
-Il peut vivre :
+It can live in a workspace such as:
 
 ```text
 workspace/
@@ -23,61 +23,61 @@ workspace/
 └── LevelUpDiag-Koali/
 ```
 
-Il reste autonome et peut être supprimé sans empêcher kOA-Linux de fonctionner.
+It remains autonomous and can be deleted without preventing kOA-Linux from working.
 
-## Ce qu'il fait
+## What it does
 
-- charge une configuration ;
-- découvre les niveaux via un manifeste ;
-- lance un niveau précis ou une série ;
-- gère les prérequis simples ;
-- applique des timeouts ;
-- capture les sorties ;
-- attribue un verdict ;
-- produit des rapports ;
-- affiche l'état via CLI ou GUI.
+- loads configuration;
+- discovers levels through a manifest;
+- runs one level or a series of levels;
+- handles simple prerequisites;
+- applies timeouts;
+- captures output;
+- assigns a verdict;
+- produces reports;
+- displays state through the CLI or GUI.
 
-## Ce qu'il ne fait pas
+## What it does not do
 
-- il ne remplace pas les tests de kOA-Linux ;
-- il ne définit pas les règles de kOA-Linux ;
-- il ne construit pas une nouvelle couche d'autorité ;
-- il ne doit pas devenir une dépendance du produit ;
-- il ne doit pas être nécessaire au runtime.
+- it does not replace kOA-Linux tests;
+- it does not define kOA-Linux rules;
+- it does not create a new authority layer;
+- it must not become a product dependency;
+- it must not be required at runtime.
 
-## Concepts principaux
+## Main concepts
 
 ### Level
 
-Une unité de diagnostic ou validation exécutable.
+An executable diagnostic or validation unit.
 
 ### Run
 
-Une exécution réelle d'un Level à un instant donné.
+A concrete execution of a Level at a given point in time.
 
 ### Result
 
-Le résultat normalisé du Run.
+The normalized outcome of a Run.
 
 ### Finding
 
-Une observation utile produite par un niveau.
+A useful observation produced by a level.
 
 ### Artifact
 
-Un fichier auxiliaire produit par un niveau : log, rapport, capture ou sortie de commande.
+An auxiliary file produced by a level: log, report, capture, or command output.
 
 ### Campaign
 
-Un ensemble de Runs exécutés ensemble avec une même cible et un même contexte.
+A set of Runs executed together against the same target and context.
 
-## Philosophie
+## Philosophy
 
-Le système privilégie :
+The system favors:
 
-- des niveaux petits ;
-- des responsabilités lisibles ;
-- des résultats explicites ;
-- des logs faciles à retrouver ;
-- une orchestration compréhensible ;
-- peu de magie.
+- small levels;
+- readable responsibilities;
+- explicit results;
+- easy-to-find logs;
+- understandable orchestration;
+- minimal magic.

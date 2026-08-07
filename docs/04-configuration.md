@@ -1,29 +1,29 @@
 # Configuration
 
-## Fichiers
+## Files
 
-LevelUpDiag utilise deux fichiers complémentaires :
+LevelUpDiag uses two complementary files:
 
 ```text
 levelupdiag.config.example.json
 levelupdiag.config.local.json
 ```
 
-Le fichier `example` est versionné et sert de modèle.
+The `example` file is versioned and serves as a template.
 
-Le fichier `local` contient les valeurs propres à la machine et ne doit pas contenir d'informations destinées au dépôt.
+The `local` file contains machine-specific values and must not contain information intended for the repository.
 
-## Principes
+## Principles
 
-- les chemins locaux appartiennent à la configuration locale ;
-- les secrets ne doivent pas être versionnés ;
-- tous les levels passent par le loader partagé ;
-- les chemins sont résolus de manière cohérente ;
-- un champ requis inconnu ou invalide doit produire une erreur claire.
+- local paths belong in local configuration;
+- secrets must not be versioned;
+- all levels go through the shared loader;
+- paths are resolved consistently;
+- an unknown or invalid required field must produce a clear error.
 
-## Configuration cible Koali
+## Koali target configuration
 
-La configuration peut être simplifiée par rapport au modèle web générique :
+Configuration can be simplified compared with the generic web model:
 
 ```json
 {
@@ -48,19 +48,19 @@ La configuration peut être simplifiée par rapport au modèle web générique :
 }
 ```
 
-Les commandes absentes du checkout cible ne doivent pas être inventées par la configuration.
+Commands that do not exist in the target checkout must not be invented by configuration.
 
 ## target_repo_root
 
-La racine de kOA-Linux est une donnée centrale.
+The kOA-Linux root is a central value.
 
-Le runner doit vérifier qu'elle existe avant de lancer des checks liés à la cible.
+The runner must verify that it exists before launching target-related checks.
 
 ## control_dir
 
-Le dossier de contrôle local contient l'état produit par LevelUpDiag-Koali.
+The local control directory contains state produced by LevelUpDiag-Koali.
 
-Valeur recommandée :
+Recommended value:
 
 ```text
 .levelupdiag
@@ -68,9 +68,9 @@ Valeur recommandée :
 
 ## artifacts_dir
 
-Dossier des diagnostics et logs.
+Directory for diagnostics and logs.
 
-Valeur recommandée :
+Recommended value:
 
 ```text
 .levelupdiag/diagnostics
@@ -78,21 +78,21 @@ Valeur recommandée :
 
 ## Toolchain
 
-Les outils sont divisés en :
+Tools are split into:
 
-- `required` : absence bloquante pour les niveaux qui en dépendent ;
-- `optional` : utilisés lorsqu'ils sont disponibles.
+- `required`: absence blocks levels that depend on them;
+- `optional`: used when available.
 
-Un niveau doit signaler précisément quel outil lui manque.
+A level must report exactly which tool is missing.
 
 ## Commands
 
-Les commandes sont des alias pratiques.
+Commands are convenient aliases.
 
-Un level peut utiliser un alias partagé au lieu de recopier une commande dans plusieurs fichiers.
+A level may use a shared alias instead of duplicating the same command across several files.
 
 ## Environment
 
-`env` contient seulement les variables explicitement nécessaires à l'exécution.
+`env` contains only variables explicitly required for execution.
 
-Éviter de recopier ou afficher l'environnement complet.
+Avoid copying or displaying the full environment.

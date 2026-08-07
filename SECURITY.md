@@ -1,45 +1,45 @@
 # Security
 
-LevelUpDiag-Koali lance des processus externes et manipule des chemins locaux. Sa surface de sécurité principale est donc l'exécution de commandes et la collecte de sorties.
+LevelUpDiag-Koali runs external processes and handles local paths. Its main security surface is therefore command execution and output collection.
 
-## Principes
+## Principles
 
-- ne jamais placer de secret dans `levelupdiag.config.example.json` ;
-- limiter les commandes à celles déclarées dans le manifeste ou la configuration ;
-- préférer les commandes sous forme de liste d'arguments ;
-- éviter l'interprétation shell lorsque ce n'est pas nécessaire ;
-- valider les chemins avant lecture ou écriture ;
-- ne jamais écrire en dehors des répertoires explicitement configurés ;
-- traiter kOA-Linux comme une cible en lecture seule par défaut ;
-- filtrer les valeurs sensibles avant écriture dans les logs ;
-- ne pas transformer une erreur d'infrastructure en PASS.
+- never place secrets in `levelupdiag.config.example.json`;
+- limit commands to those declared in the manifest or configuration;
+- prefer commands represented as argument lists;
+- avoid shell interpretation when it is not required;
+- validate paths before reading or writing;
+- never write outside explicitly configured directories;
+- treat kOA-Linux as read-only by default;
+- filter sensitive values before writing logs;
+- never convert an infrastructure error into PASS.
 
-## Données sensibles
+## Sensitive data
 
-Les logs peuvent contenir :
+Logs may contain:
 
-- chemins locaux ;
-- sorties de processus ;
-- noms d'utilisateur locaux ;
-- variables d'environnement ;
-- informations sur les outils installés.
+- local paths;
+- process output;
+- local user names;
+- environment variables;
+- information about installed tools.
 
-Les niveaux ne doivent pas recopier l'environnement complet dans leurs rapports.
+Levels must not copy the full environment into their reports.
 
-Les valeurs ressemblant à des secrets, tokens, mots de passe ou clés doivent être masquées avant persistance.
+Values that look like secrets, tokens, passwords, or keys must be masked before persistence.
 
-## Commandes
+## Commands
 
-Les commandes provenant d'un fichier de configuration local sont considérées comme des entrées de confiance limitée.
+Commands loaded from a local configuration file are treated as limited-trust inputs.
 
-Le runner doit :
+The runner must:
 
-1. connaître la commande réellement exécutée ;
-2. enregistrer son répertoire de travail ;
-3. appliquer un timeout ;
-4. capturer le code de sortie ;
-5. distinguer timeout, absence d'exécutable et échec de la cible.
+1. know the command that is actually executed;
+2. record its working directory;
+3. apply a timeout;
+4. capture the exit code;
+5. distinguish timeout, missing executable, and target failure.
 
-## Signalement
+## Reporting
 
-Une vulnérabilité touchant l'exécution de commande, l'évasion de chemin, la fuite de secrets ou l'écriture non attendue dans la cible doit être traitée comme prioritaire.
+A vulnerability involving command execution, path escape, secret leakage, or unexpected writes to the target must be treated as high priority.

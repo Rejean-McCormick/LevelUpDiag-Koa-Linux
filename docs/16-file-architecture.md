@@ -1,24 +1,24 @@
 # File Architecture
 
-## Statut
+## Status
 
-Ce document fixe l'architecture de fichiers de la reconstruction propre de **LevelUpDiag-Koali**.
+This document defines the file architecture for the clean reconstruction of **LevelUpDiag-Koali**.
 
-Il est normatif pour la structure du dépôt.
+It is normative for the repository structure.
 
-Il complète les autres documents sans redéfinir leur comportement fonctionnel. En cas de doute sur l'emplacement d'un fichier ou la création d'un nouveau fichier, ce document prévaut sur les exemples plus anciens.
+It complements the other documents without redefining their functional behavior. If there is any doubt about a file location or the creation of a new file, this document takes precedence over older examples.
 
-L'architecture est verrouillée **documentairement** : aucun mécanisme de lockfile, de hash ou de validation par empreinte n'est utilisé.
+The architecture is frozen **by documentation**: no lockfile, hash, or fingerprint-validation mechanism is used.
 
-## Règle principale
+## Main rule
 
-Un fichier source versionné ne doit être créé que s'il appartient à l'arborescence définie ici.
+A versioned source file must be created only if it belongs to the tree defined here.
 
-Un nouveau fichier, répertoire racine ou sous-système non prévu nécessite une décision explicite et une mise à jour de ce document avant composition.
+A new file, root directory, or unplanned subsystem requires an explicit decision and an update to this document before composition.
 
-Les fichiers runtime sous `.levelupdiag/` sont générés localement et ne font pas partie de l'architecture source versionnée.
+Runtime files under `.levelupdiag/` are generated locally and are not part of the versioned source architecture.
 
-## Arborescence finale
+## Final tree
 
 ```text
 LevelUpDiag-Koali/
@@ -117,13 +117,13 @@ LevelUpDiag-Koali/
     └── AI_COMPOSER_CONTRACT.json
 ```
 
-## Racine du dépôt
+## Repository root
 
 ### `.gitignore`
 
-Contient uniquement les exclusions nécessaires au dépôt et aux sorties locales.
+Contains only exclusions required by the repository and local outputs.
 
-Doit au minimum exclure :
+It must exclude at least:
 
 ```text
 __pycache__/
@@ -137,159 +137,159 @@ __pycache__/
 
 ### `README.md`
 
-Point d'entrée humain.
+Human entry point.
 
-Ne contient pas la spécification détaillée de l'architecture interne.
+It does not contain the detailed specification of the internal architecture.
 
 ### `CHANGELOG.md`
 
-Historique des changements fonctionnels, structurels et documentaires.
+History of functional, structural, and documentation changes.
 
 ### `CONTRIBUTING.md`
 
-Règles de contribution et définition minimale d'une modification acceptable.
+Contribution rules and the minimal definition of an acceptable change.
 
 ### `SECURITY.md`
 
-Règles de sécurité propres à l'appendice.
+Security rules specific to the appendix.
 
 ### `pyproject.toml`
 
-Déclare le projet Python, la version de Python supportée et les dépendances de développement éventuelles.
+Declares the Python project, supported Python version, and any development dependencies.
 
-Le runtime du core doit rester basé sur la bibliothèque standard Python sauf décision explicite contraire.
+Core runtime must remain based on the Python standard library unless an explicit decision says otherwise.
 
 ### `levelupdiag.config.example.json`
 
-Configuration exemple versionnée.
+Versioned example configuration.
 
-Aucune valeur propre à une machine ou secret réel.
+No machine-specific value or real secret.
 
 ### `levelupdiag_manifest.json`
 
-Inventaire canonique des niveaux.
+Canonical level inventory.
 
-Il est l'unique source versionnée pour :
+It is the single versioned source for:
 
-- identifiant du niveau ;
-- nom ;
-- fichier ;
-- activation ;
-- caractère requis ou optionnel ;
-- dépendances ;
-- timeout ;
-- métadonnées nécessaires au runner.
+- level identifier;
+- name;
+- file;
+- enabled state;
+- required or optional status;
+- dependencies;
+- timeout;
+- metadata required by the runner.
 
-Les niveaux ne doivent pas être découverts implicitement par scan du dossier.
+Levels must not be discovered implicitly by scanning the directory.
 
 ### `levelupdiag_wrapper.pyw`
 
-Application Tkinter principale.
+Main Tkinter application.
 
-Elle fournit la vue et délègue la logique au core.
+It provides the view and delegates logic to the core.
 
 ### `levelupdiag_wrapper_common.py`
 
-Helpers exclusivement liés au wrapper et au lancement graphique.
+Helpers exclusively related to the wrapper and graphical launching.
 
-Toute logique réutilisable par la CLI appartient au core, pas à ce fichier.
+Any logic reusable by the CLI belongs in the core, not in this file.
 
 ### `START_LEVELUPDIAG.bat`
 
-Point d'entrée Windows pratique vers le wrapper principal.
+Convenient Windows entry point to the main wrapper.
 
-Il ne contient aucune logique de validation.
+It contains no validation logic.
 
 ## `levelupdiag_core/`
 
-Le core est fermé à **11 modules** dans la version cible.
+The core is closed to **11 modules** in the target version.
 
-Aucun sous-package supplémentaire n'est prévu.
+No additional subpackage is planned.
 
 ### `__init__.py`
 
-Exports publics stables du core.
+Stable public core exports.
 
 ### `config.py`
 
-Propriétaire de :
+Owns:
 
-- chargement de configuration ;
-- fusion example/local ;
-- résolution des chemins ;
-- environnement explicitement ajouté.
+- configuration loading;
+- example/local merge;
+- path resolution;
+- explicitly added environment values.
 
-Ne lance aucun check.
+It runs no checks.
 
 ### `manifest.py`
 
-Propriétaire de :
+Owns:
 
-- lecture du manifeste ;
-- `LevelInfo` ou construction équivalente ;
-- normalisation d'identifiants ;
-- lookup des niveaux.
+- manifest reading;
+- `LevelInfo` or equivalent construction;
+- identifier normalization;
+- level lookup.
 
-Ne planifie pas l'exécution.
+It does not plan execution.
 
 ### `models.py`
 
-Contient uniquement les structures de données partagées :
+Contains only shared data structures:
 
-- `Finding` ;
-- `Artifact` ;
-- `StepResult` ;
-- `LevelResult` ;
+- `Finding`;
+- `Artifact`;
+- `StepResult`;
+- `LevelResult`;
 - `CampaignResult`.
 
-Pas d'I/O, subprocess ou Tkinter.
+No I/O, subprocess, or Tkinter.
 
 ### `planner.py`
 
-Propriétaire de :
+Owns:
 
-- sélection ;
-- ordre ;
-- dépendances ;
-- détection de cycles ;
-- blocage par dépendance.
+- selection;
+- ordering;
+- dependencies;
+- cycle detection;
+- dependency blocking.
 
-Le plan reste déterministe et séquentiel par défaut.
+The plan remains deterministic and sequential by default.
 
 ### `commands.py`
 
-Propriétaire de l'exécution de processus externes.
+Owns external process execution.
 
-Il capture :
+It captures:
 
-- commande ;
-- cwd ;
-- code de sortie ;
-- timestamps ;
-- durée ;
-- sortie utile ;
-- timeout ou erreur de lancement.
+- command;
+- cwd;
+- exit code;
+- timestamps;
+- duration;
+- useful output;
+- timeout or launch error.
 
-Le chemin normal d'exécution n'utilise pas `shell=True`.
+The normal execution path does not use `shell=True`.
 
 ### `runner.py`
 
-Orchestrateur principal.
+Main orchestrator.
 
-Il :
+It:
 
-- utilise `planner.py` ;
-- lance les levels ;
-- transmet la configuration ;
-- applique les dépendances ;
-- agrège une campagne ;
-- délègue les logs et rapports aux modules propriétaires.
+- uses `planner.py`;
+- runs levels;
+- passes configuration;
+- applies dependencies;
+- aggregates a campaign;
+- delegates logs and reports to their owning modules.
 
-Il ne contient aucune logique spécifique à N03, N04, N05, etc.
+It contains no logic specific to N03, N04, N05, and so on.
 
 ### `verdicts.py`
 
-Source unique des verdicts :
+Single source of verdicts:
 
 ```text
 PASS
@@ -303,149 +303,149 @@ INFRA_ERROR
 CONFIG_ERROR
 ```
 
-Contient uniquement constantes et helpers d'agrégation/normalisation.
+Contains only constants and aggregation/normalization helpers.
 
 ### `reports.py`
 
-Lecture et écriture des résultats structurés.
+Reads and writes structured results.
 
-Il n'exécute pas de commande.
+It does not execute commands.
 
 ### `logs.py`
 
-Organisation et écriture des logs locaux.
+Organizes and writes local logs.
 
-Écrit uniquement dans les répertoires runtime configurés.
+It writes only within configured runtime directories.
 
 ### `artifacts.py`
 
-Helpers de chemins d'artefacts, noms sûrs et ouverture locale de dossiers/fichiers.
+Helpers for artifact paths, safe names, and local opening of directories/files.
 
-Il n'interprète pas le contenu d'un artefact comme code.
+It does not interpret artifact content as code.
 
 ## `levels/`
 
-Le dossier contient exactement les niveaux définis dans la taxonomie cible.
+The directory contains exactly the levels defined in the target taxonomy.
 
-Chaque fichier est mince et spécifique à sa responsabilité.
+Each file is thin and specific to its responsibility.
 
-Un level :
+A level:
 
-- charge la configuration ;
-- vérifie ses prérequis locaux ;
-- appelle les helpers du core ;
-- lance au besoin une commande publique ;
-- produit un `LevelResult` ;
-- ne lance jamais directement un autre level.
+- loads configuration;
+- verifies its local prerequisites;
+- calls core helpers;
+- launches a public command when needed;
+- produces a `LevelResult`;
+- never directly launches another level.
 
-### Taxonomie fixée
+### Frozen taxonomy
 
-| ID | Fichier | Responsabilité |
+| ID | File | Responsibility |
 |---|---|---|
-| N00 | `N00_control_panel.pyw` | self-check léger / contrôle de l'appendice |
-| N01 | `N01_environment.pyw` | environnement, Python, chemins et outils |
-| N02 | `N02_repository.pyw` | checkout cible et état de dépôt observable |
-| N03 | `N03_documentation.pyw` | validation documentaire publique |
-| N04 | `N04_contracts.pyw` | validation des contrats |
-| N05 | `N05_components.pyw` | validations des composants |
-| N06 | `N06_integrations.pyw` | validations des intégrations disponibles |
-| N07 | `N07_profiles.pyw` | validations des profils disponibles |
-| N08 | `N08_security.pyw` | validations sécurité publiques |
-| N09 | `N09_offline.pyw` | validations offline |
-| N10 | `N10_system.pyw` | validations système |
-| N11 | `N11_delivery.pyw` | absence de l'appendice dans la livraison |
+| N00 | `N00_control_panel.pyw` | lightweight self-check / appendix control |
+| N01 | `N01_environment.pyw` | environment, Python, paths, and tools |
+| N02 | `N02_repository.pyw` | target checkout and observable repository state |
+| N03 | `N03_documentation.pyw` | public documentation validation |
+| N04 | `N04_contracts.pyw` | contract validation |
+| N05 | `N05_components.pyw` | component validations |
+| N06 | `N06_integrations.pyw` | available integration validations |
+| N07 | `N07_profiles.pyw` | available profile validations |
+| N08 | `N08_security.pyw` | public security validations |
+| N09 | `N09_offline.pyw` | offline validations |
+| N10 | `N10_system.pyw` | system validations |
+| N11 | `N11_delivery.pyw` | appendix absence in delivery |
 
-Cette taxonomie ne doit pas être élargie, réduite ou renumérotée sans modification explicite de l'architecture.
+This taxonomy must not be expanded, reduced, or renumbered without an explicit architecture change.
 
 ## `launchers/`
 
-Les launchers sont des wrappers Windows extrêmement minces.
+Launchers are extremely thin Windows wrappers.
 
-Chaque launcher appelle `scripts/run_level.py` avec l'identifiant correspondant.
+Each launcher calls `scripts/run_level.py` with the corresponding identifier.
 
-Exemple conceptuel :
+Conceptual example:
 
 ```bat
 @echo off
 py "%~dp0..\scripts\run_level.py" N04 --windowed
 ```
 
-Ils ne contiennent aucune logique de check, configuration ou verdict.
+They contain no check, configuration, or verdict logic.
 
-`run_level.bat` offre l'accès générique au lanceur CLI.
+`run_level.bat` provides generic access to the CLI launcher.
 
 ## `scripts/`
 
 ### `print_manifest.py`
 
-Affiche le manifeste de manière lisible.
+Displays the manifest in readable form.
 
-Pas de logique de validation.
+No validation logic.
 
 ### `run_level.py`
 
-Entrée CLI canonique pour :
+Canonical CLI entry point to:
 
-- lister les levels ;
-- lancer un level ;
-- lancer tous les levels activés ;
-- lancer une campagne simple.
+- list levels;
+- run one level;
+- run all enabled levels;
+- run a simple campaign.
 
-La GUI et les launchers doivent converger vers les mêmes fonctions core.
+The GUI and launchers must converge on the same core functions.
 
 ### `verify_repo.py`
 
-Vérifie la cohérence structurelle de **LevelUpDiag-Koali lui-même** :
+Verifies the structural consistency of **LevelUpDiag-Koali itself**:
 
-- fichiers obligatoires ;
-- JSON lisible ;
-- manifeste cohérent ;
-- fichiers de levels présents ;
-- imports/compilation Python ;
-- dépendances de levels valides.
+- required files;
+- readable JSON;
+- coherent manifest;
+- level files present;
+- Python imports/compilation;
+- valid level dependencies.
 
-Il ne devient pas un validateur général de kOA-Linux.
+It does not become a general kOA-Linux validator.
 
 ## `schemas/`
 
-La version cible contient un seul schéma :
+The target version contains a single schema:
 
 ```text
 levelupdiag.result.schema.json
 ```
 
-Il définit le rapport d'un level.
+It defines a level report.
 
-Aucun registre ou système complexe de schémas n'est prévu.
+No registry or complex schema system is planned.
 
 ## `tests/`
 
-La suite reste plate et directement mappée sur le core.
+The suite remains flat and directly mapped to the core.
 
-| Test | Couvre |
+| Test | Covers |
 |---|---|
 | `test_config.py` | configuration |
-| `test_manifest.py` | manifeste et LevelInfo |
-| `test_planner.py` | ordre et dépendances |
-| `test_commands.py` | subprocess, timeout, erreurs |
-| `test_runner.py` | orchestration et campagnes |
-| `test_reports.py` | sérialisation |
-| `test_logs.py` | layout et écriture des logs |
-| `test_delivery_level.py` | N11 et détection des résidus |
+| `test_manifest.py` | manifest and LevelInfo |
+| `test_planner.py` | ordering and dependencies |
+| `test_commands.py` | subprocess, timeout, errors |
+| `test_runner.py` | orchestration and campaigns |
+| `test_reports.py` | serialization |
+| `test_logs.py` | log layout and writes |
+| `test_delivery_level.py` | N11 and residue detection |
 
-Ne pas créer un arbre de tests par framework tant que ces huit fichiers restent suffisants.
+Do not create a framework-specific test tree while these eight files remain sufficient.
 
 ## `docs/`
 
-La documentation est adjacente au code et ne doit pas générer une seconde hiérarchie de gouvernance.
+Documentation is adjacent to code and must not create a second governance hierarchy.
 
-`AI_COMPOSER_CONTRACT.json` est le complément machine-readable destiné aux IA de composition.
+`AI_COMPOSER_CONTRACT.json` is the machine-readable complement intended for AI composition tools.
 
-`16-file-architecture.md` est la référence humaine canonique pour les chemins.
+`16-file-architecture.md` is the canonical human reference for paths.
 
-## Runtime local non versionné
+## Unversioned local runtime
 
-Le runtime local est limité à :
+Local runtime is limited to:
 
 ```text
 .levelupdiag/
@@ -461,18 +461,18 @@ Le runtime local est limité à :
 └── latest/
 ```
 
-Des fichiers temporaires internes peuvent exister pendant une écriture, mais ils ne deviennent pas des formats publics.
+Internal temporary files may exist during a write, but they do not become public formats.
 
-`.levelupdiag/` :
+`.levelupdiag/`:
 
-- est ignoré par Git ;
-- n'est pas une source d'autorité ;
-- peut être supprimé sans affecter le code ;
-- n'est jamais inclus dans une livraison kOA-Linux.
+- is ignored by Git;
+- is not a source of authority;
+- may be deleted without affecting code;
+- is never included in a kOA-Linux delivery.
 
-## Répertoires interdits sans décision explicite
+## Directories forbidden without an explicit decision
 
-Ne pas créer spontanément :
+Do not create spontaneously:
 
 ```text
 src/
@@ -498,11 +498,11 @@ adapters/
 workflows/
 ```
 
-Cette interdiction concerne l'architecture source LevelUpDiag-Koali. Un outil externe peut évidemment produire temporairement `build/` ou `dist/`, mais ces répertoires ne deviennent pas des composants du design sans décision explicite.
+This prohibition concerns the LevelUpDiag-Koali source architecture. An external tool may of course temporarily produce `build/` or `dist/`, but those directories do not become design components without an explicit decision.
 
-## Fichiers et concepts explicitement hors architecture cible
+## Files and concepts explicitly outside the target architecture
 
-La reconstruction propre n'emporte pas les éléments historiques suivants :
+The clean reconstruction does not carry forward these historical elements:
 
 ```text
 .smartignore
@@ -510,36 +510,36 @@ GitSink.bat
 levelupdiag_core/http.py
 ```
 
-Les anciennes taxonomies orientées frontend/backend/Playwright/UX ne sont pas reconduites.
+The old frontend/backend/Playwright/UX-oriented taxonomies are not carried forward.
 
-Aucun fichier de validation par hash, inventaire d'empreintes ou lockfile d'architecture ne doit être ajouté.
+No hash-validation file, fingerprint inventory, or architecture lockfile must be added.
 
-## Propriété des responsabilités
+## Responsibility ownership
 
-Chaque responsabilité a un propriétaire unique :
+Each responsibility has one owner:
 
-| Responsabilité | Propriétaire |
+| Responsibility | Owner |
 |---|---|
 | configuration | `levelupdiag_core/config.py` |
-| inventaire des levels | `levelupdiag_manifest.json` + `manifest.py` |
-| modèles | `models.py` |
-| ordre/dépendances | `planner.py` |
+| level inventory | `levelupdiag_manifest.json` + `manifest.py` |
+| models | `models.py` |
+| ordering/dependencies | `planner.py` |
 | subprocess | `commands.py` |
 | orchestration | `runner.py` |
 | verdicts | `verdicts.py` |
-| sérialisation | `reports.py` |
+| serialization | `reports.py` |
 | logs | `logs.py` |
-| artefacts | `artifacts.py` |
-| interface graphique | `levelupdiag_wrapper*.py*` |
+| artifacts | `artifacts.py` |
+| graphical interface | `levelupdiag_wrapper*.py*` |
 | CLI | `scripts/run_level.py` |
-| vérification du dépôt appendice | `scripts/verify_repo.py` |
-| logique spécifique d'un check | `levels/Nxx_*.pyw` |
+| appendix repository verification | `scripts/verify_repo.py` |
+| check-specific logic | `levels/Nxx_*.pyw` |
 
-Dupliquer une responsabilité entre deux propriétaires est une dérive architecturale.
+Duplicating a responsibility across two owners is architectural drift.
 
-## Règles de dépendances internes
+## Internal dependency rules
 
-Dépendances admises :
+Allowed dependencies:
 
 ```text
 wrapper ───────→ core
@@ -549,45 +549,45 @@ runner ────────→ planner
 runner ────────→ commands
 runner ────────→ reports
 runner ────────→ logs
-core modules ──→ models/verdicts/config selon besoin
+core modules ──→ models/verdicts/config as needed
 ```
 
-Dépendances interdites :
+Forbidden dependencies:
 
 ```text
 core → wrapper
-core → level spécifique
-level → autre level
+core → specific level
+level → another level
 kOA-Linux → LevelUpDiag-Koali
 reports → subprocess
 models → I/O
 verdicts → I/O
 ```
 
-## Règle de création de fichier
+## File creation rule
 
-Une IA ou un développeur ne doit pas résoudre un problème en créant un nouveau module par défaut.
+An AI system or developer must not solve a problem by creating a new module by default.
 
-Ordre de décision :
+Decision order:
 
-1. la responsabilité appartient-elle à un fichier existant ?
-2. peut-elle être ajoutée sans casser sa cohésion ?
-3. est-ce une logique spécifique à un level ?
-4. est-ce réellement une nouvelle responsabilité durable ?
+1. does the responsibility belong to an existing file?
+2. can it be added without breaking that file's cohesion?
+3. is it logic specific to a level?
+4. is it genuinely a new durable responsibility?
 
-Seulement le quatrième cas peut justifier une évolution de l'architecture.
+Only the fourth case may justify an architecture evolution.
 
-Avant création, le changement doit mettre à jour :
+Before creation, the change must update:
 
 ```text
 docs/16-file-architecture.md
 docs/AI_COMPOSER_CONTRACT.json
-docs/README.md si la navigation documentaire change
+docs/README.md if documentation navigation changes
 ```
 
-## Règle de renommage
+## Rename rule
 
-Les chemins suivants sont des interfaces stables du dépôt :
+The following paths are stable repository interfaces:
 
 ```text
 levelupdiag_manifest.json
@@ -604,27 +604,27 @@ tests/
 docs/
 ```
 
-Ils ne doivent pas être renommés dans une reconstruction ou un refactor ordinaire.
+They must not be renamed during an ordinary reconstruction or refactor.
 
-## Règle de suppression
+## Deletion rule
 
-Un fichier de l'arborescence finale peut être supprimé uniquement si :
+A file in the final tree may be deleted only if:
 
-1. sa responsabilité disparaît réellement ;
-2. aucune autre documentation ne l'exige ;
-3. le manifeste et les imports sont adaptés ;
-4. ce document est modifié dans la même évolution.
+1. its responsibility genuinely disappears;
+2. no other documentation requires it;
+3. the manifest and imports are adapted;
+4. this document is modified in the same change.
 
-## Critère de conformité structurelle
+## Structural compliance criterion
 
-Une reconstruction propre est structurellement conforme lorsque :
+A clean reconstruction is structurally compliant when:
 
-- tous les fichiers obligatoires de l'arborescence finale existent ;
-- aucun fichier historique explicitement retiré n'est repris ;
-- aucun nouveau sous-système non prévu n'a été ajouté ;
-- chaque level déclaré possède exactement son fichier attendu ;
-- les responsabilités restent dans leurs modules propriétaires ;
-- `.levelupdiag/` reste local et non versionné ;
-- LevelUpDiag-Koali reste indépendant du code runtime de kOA-Linux.
+- every required file in the final tree exists;
+- no explicitly removed historical file is carried forward;
+- no unplanned new subsystem has been added;
+- every declared level has exactly its expected file;
+- responsibilities remain in their owning modules;
+- `.levelupdiag/` remains local and unversioned;
+- LevelUpDiag-Koali remains independent of kOA-Linux runtime code.
 
-La conformité structurelle repose sur les chemins et contrats documentés, pas sur des empreintes de fichiers.
+Structural compliance relies on documented paths and contracts, not on file fingerprints.

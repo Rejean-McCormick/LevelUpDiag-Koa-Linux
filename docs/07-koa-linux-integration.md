@@ -1,32 +1,32 @@
 # kOA-Linux integration
 
-## Principe
+## Principle
 
-LevelUpDiag-Koali est externe à kOA-Linux.
+LevelUpDiag-Koali is external to kOA-Linux.
 
-Il connaît le chemin du checkout cible grâce à :
+It knows the target checkout path through:
 
 ```text
 target_repo_root
 ```
 
-Il appelle ensuite uniquement des scripts ou commandes publiques disponibles dans ce checkout.
+It then calls only public scripts or commands available in that checkout.
 
-## Dépendance à sens unique
+## One-way dependency
 
 ```text
 LevelUpDiag-Koali
         ↓
-commandes publiques
+public commands
         ↓
 kOA-Linux
 ```
 
-kOA-Linux ne dépend pas de LevelUpDiag-Koali.
+kOA-Linux does not depend on LevelUpDiag-Koali.
 
-## Exemples de commandes
+## Command examples
 
-Selon ce qui existe dans la version de kOA-Linux ciblée :
+Depending on what exists in the targeted kOA-Linux version:
 
 ```text
 python docs/tools/validate_docs.py
@@ -37,17 +37,17 @@ python ci/scripts/run-offline.py
 python ci/scripts/run-system-tests.py
 ```
 
-Le manifeste ou la configuration doivent refléter les commandes réellement disponibles dans le checkout utilisé.
+The manifest or configuration must reflect the commands actually available in the checkout being used.
 
-## Lecture seule par défaut
+## Read-only by default
 
-Les niveaux Koali doivent considérer le checkout comme une cible en lecture seule.
+Koali levels must treat the checkout as read-only.
 
-Une opération qui modifie le checkout doit être séparée des campagnes ordinaires et clairement signalée.
+Any operation that modifies the checkout must be separated from ordinary campaigns and clearly reported.
 
-## Révision
+## Revision context
 
-Lorsqu'un checkout Git est disponible, les rapports peuvent enregistrer :
+When a Git checkout is available, reports may record:
 
 ```text
 branch
@@ -55,28 +55,28 @@ HEAD
 working tree clean/dirty
 ```
 
-Ces informations servent au diagnostic et à l'identification du contexte d'exécution.
+This information is used for diagnosis and execution-context identification.
 
-## Autorité
+## Authority
 
-Si LevelUpDiag-Koali et kOA-Linux divergent sur une règle, la règle de kOA-Linux prévaut.
+If LevelUpDiag-Koali and kOA-Linux disagree on a rule, the kOA-Linux rule takes precedence.
 
-LevelUpDiag-Koali n'a pas pour rôle de corriger automatiquement cette divergence.
+LevelUpDiag-Koali is not responsible for automatically correcting that divergence.
 
-## Absence d'interface publique
+## Missing public interface
 
-Lorsqu'un niveau attend une commande qui n'existe pas dans la cible :
+When a level expects a command that does not exist in the target:
 
 ```text
 BLOCKED
 ```
 
-ou :
+or:
 
 ```text
 CONFIG_ERROR
 ```
 
-selon que le problème vient de la cible ou de la configuration.
+depending on whether the problem comes from the target or configuration.
 
-Il ne faut pas contourner le problème par un import interne non documenté.
+The issue must not be bypassed through an undocumented internal import.

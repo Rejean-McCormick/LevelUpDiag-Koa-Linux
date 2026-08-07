@@ -1,50 +1,50 @@
 # Reference
 
-## Fichiers principaux
+## Main files
 
-| Fichier | Rôle |
+| File | Role |
 |---|---|
-| `levelupdiag_manifest.json` | Inventaire et ordre des levels |
-| `levelupdiag.config.example.json` | Modèle versionné de configuration |
-| `levelupdiag.config.local.json` | Configuration locale |
-| `levelupdiag_wrapper.pyw` | Interface graphique |
-| `levelupdiag_wrapper_common.py` | Helpers du wrapper |
-| `scripts/run_level.py` | Lanceur CLI |
-| `scripts/print_manifest.py` | Affichage du manifeste |
-| `scripts/verify_repo.py` | Vérification structurelle du dépôt |
-| `levelupdiag_core/` | Helpers partagés |
-| `.levelupdiag/` | État et diagnostics locaux |
+| `levelupdiag_manifest.json` | Level inventory and ordering |
+| `levelupdiag.config.example.json` | Versioned configuration template |
+| `levelupdiag.config.local.json` | Local configuration |
+| `levelupdiag_wrapper.pyw` | Graphical interface |
+| `levelupdiag_wrapper_common.py` | Wrapper helpers |
+| `scripts/run_level.py` | CLI launcher |
+| `scripts/print_manifest.py` | Manifest display |
+| `scripts/verify_repo.py` | Repository structural verification |
+| `levelupdiag_core/` | Shared helpers |
+| `.levelupdiag/` | Local state and diagnostics |
 
 ## Verdicts
 
-| Verdict | Signification |
+| Verdict | Meaning |
 |---|---|
-| `PASS` | condition satisfaite |
-| `WARN` | anomalie non bloquante |
-| `FAIL` | cible testée, condition non satisfaite |
-| `SKIP` | exécution volontairement omise |
-| `BLOCKED` | prérequis manquant |
-| `PARTIAL` | résultat incomplet |
-| `ERROR` | erreur du level |
-| `INFRA_ERROR` | problème d'environnement |
-| `CONFIG_ERROR` | configuration invalide |
+| `PASS` | condition satisfied |
+| `WARN` | non-blocking anomaly |
+| `FAIL` | target tested, condition not satisfied |
+| `SKIP` | execution intentionally omitted |
+| `BLOCKED` | missing prerequisite |
+| `PARTIAL` | incomplete result |
+| `ERROR` | level error |
+| `INFRA_ERROR` | environment problem |
+| `CONFIG_ERROR` | invalid configuration |
 
-## Champs de configuration principaux
+## Main configuration fields
 
-| Champ | Rôle |
+| Field | Role |
 |---|---|
-| `schema` | version du format |
-| `app_name` | nom de la cible |
-| `target_repo_root` | racine du checkout cible |
-| `control_dir` | état runtime LevelUpDiag |
-| `artifacts_dir` | logs et diagnostics |
-| `toolchain` | outils requis ou optionnels |
-| `commands` | commandes partagées |
-| `env` | variables explicitement ajoutées |
+| `schema` | format version |
+| `app_name` | target name |
+| `target_repo_root` | target checkout root |
+| `control_dir` | LevelUpDiag runtime state |
+| `artifacts_dir` | logs and diagnostics |
+| `toolchain` | required or optional tools |
+| `commands` | shared commands |
+| `env` | explicitly added variables |
 
-## Champs d'un level
+## Level fields
 
-Base recommandée :
+Recommended base:
 
 ```text
 id
@@ -56,7 +56,7 @@ depends_on
 timeout_seconds
 ```
 
-## Résultat minimal
+## Minimal result
 
 ```text
 schema
@@ -69,22 +69,22 @@ findings
 artifacts
 ```
 
-## Codes de sortie recommandés
+## Recommended exit codes
 
-Pour le runner :
+For the runner:
 
-| Code | Sens |
+| Code | Meaning |
 |---|---|
-| `0` | lancement ou résultat réussi |
-| `1` | résultat négatif du level |
-| `2` | argument ou level inconnu |
-| `3` | fichier ou prérequis principal manquant |
-| `4` | configuration invalide |
-| `5` | erreur interne du runner |
+| `0` | successful launch or result |
+| `1` | negative level result |
+| `2` | unknown argument or level |
+| `3` | missing file or main prerequisite |
+| `4` | invalid configuration |
+| `5` | internal runner error |
 
-Les levels individuels peuvent avoir des codes internes différents si leur rapport JSON donne le verdict canonique.
+Individual levels may use different internal codes if their JSON report provides the canonical verdict.
 
-## Layout des diagnostics
+## Diagnostics layout
 
 ```text
 .levelupdiag/
@@ -100,9 +100,9 @@ Les levels individuels peuvent avoir des codes internes différents si leur rapp
 └── latest/
 ```
 
-## Conventions de nommage
+## Naming conventions
 
-Levels :
+Levels:
 
 ```text
 N00
@@ -110,14 +110,14 @@ N01
 N02
 ```
 
-Fichiers :
+Files:
 
 ```text
 N01_environment.pyw
 N04_contracts.py
 ```
 
-Dossiers diagnostics :
+Diagnostics directories:
 
 ```text
 N01-environment/

@@ -1,48 +1,48 @@
 # Contributing
 
-Les contributions à LevelUpDiag-Koali doivent préserver la simplicité du système.
+Contributions to LevelUpDiag-Koali must preserve the simplicity of the system.
 
-## Règles générales
+## General rules
 
-Une modification doit avoir une responsabilité claire :
+A change must have one clear responsibility:
 
-- ajout ou correction d'un niveau ;
-- évolution du runner ;
-- amélioration de la collecte de logs ;
-- amélioration de la configuration ;
-- amélioration du modèle de résultat ;
-- amélioration de la GUI ou de la CLI ;
-- adaptation à une commande publique de kOA-Linux.
+- add or fix a level;
+- evolve the runner;
+- improve log collection;
+- improve configuration;
+- improve the result model;
+- improve the GUI or CLI;
+- adapt to a public kOA-Linux command.
 
-Éviter d'introduire un nouveau concept lorsqu'un champ du manifeste, un helper partagé ou un nouveau niveau suffit.
+Avoid introducing a new concept when a manifest field, shared helper, or new level is sufficient.
 
-## Ajouter un niveau
+## Adding a level
 
-Un nouveau niveau doit :
+A new level must:
 
-1. avoir un identifiant stable ;
-2. apparaître dans `levelupdiag_manifest.json` ;
-3. avoir un fichier exécutable réel ;
-4. utiliser la configuration partagée ;
-5. écrire un résultat normalisé ;
-6. retourner un code de sortie cohérent ;
-7. ne pas modifier silencieusement la cible.
+1. have a stable identifier;
+2. appear in `levelupdiag_manifest.json`;
+3. have a real executable file;
+4. use the shared configuration;
+5. write a normalized result;
+6. return a consistent exit code;
+7. never silently modify the target.
 
-Voir [`docs/03-levels-and-checks.md`](docs/03-levels-and-checks.md).
+See [`docs/03-levels-and-checks.md`](docs/03-levels-and-checks.md).
 
-## Modifier le core
+## Modifying the core
 
-Les helpers communs appartiennent à `levelupdiag_core/`.
+Shared helpers belong in `levelupdiag_core/`.
 
-Un helper partagé doit rester générique pour plusieurs niveaux. Une logique spécifique à un seul niveau reste dans ce niveau.
+A shared helper must remain generic across multiple levels. Logic specific to a single level stays in that level.
 
 ## Documentation
 
-Toute évolution visible du manifeste, de la configuration, des verdicts, de l'ordre d'exécution ou des logs doit mettre à jour la documentation correspondante.
+Any visible change to the manifest, configuration, verdicts, execution ordering, or logs must update the corresponding documentation.
 
-## Tests attendus
+## Expected tests
 
-Avant fusion :
+Before merge:
 
 ```text
 configuration parsing
@@ -55,4 +55,4 @@ failure mapping
 CLI behavior
 ```
 
-Les checks touchant kOA-Linux doivent aussi être testés contre un checkout de test ou des fixtures contrôlées.
+Checks that touch kOA-Linux must also be tested against a test checkout or controlled fixtures.
